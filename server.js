@@ -7,6 +7,10 @@
 var app = require('./app');
 var debug = require('debug')('getdata:server');
 var http = require('http');
+const DataBase = require('config/db')
+const Job = require('app/job')
+global._ = require('lodash');
+global.ObjectId = require('mongoose').Schema.Types.ObjectId;
 
 /**
  * Get port from environment and store in Express.
@@ -28,7 +32,6 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -82,10 +85,15 @@ function onError(error) {
  */
 
 function onListening() {
+
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log('Listening on!!!! ',port)
+  DataBase.init();
+
+  new Job();
 }
+

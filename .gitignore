@@ -2,3 +2,5 @@ node_modules
 *.csv
 pack
 package-lock.json
+*.zip
+.DS_Store

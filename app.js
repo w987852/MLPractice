@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const DB = require('config/db')
+
 var indexRouter = require('./app/routes/index');
 var getDataByWebRouter = require('./app/routes/getDataByWeb');
 
@@ -18,9 +20,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//global._ = require('lodash');
+//global.ObjectId = require('mongoose').Types.ObjectId;
+
+let db = {};
+app.use(async function(req, res, next){
+  console.log('dadereaw')
+  db = await DB.getDB();
+  global.db = db;
+  next();
+})
 
 app.use('/', indexRouter);
 app.use('/getDataByWeb', getDataByWebRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

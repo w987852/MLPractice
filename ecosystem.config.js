@@ -5,8 +5,7 @@ module.exports = {
       script: 'server.js',
       node_args: '--max_old_space_size=4096',
       watch: [
-        'app/**/*.js',
-        'server.js'
+        'app/**/*.js', 'config', 'server.js', 'app.js'
       ],
       ignore_watch: [],
       env: {
